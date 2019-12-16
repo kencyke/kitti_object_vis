@@ -335,7 +335,7 @@ def show_lidar_with_depth(pc_velo,
 
         if save:
             data_idx=0
-            vely_dir = "data/obj/training/depth_pc"
+            vely_dir = "data/object/training/depth_pc"
             save_filename = os.path.join(vely_dir, '%06d.bin'%(data_idx))
             print(save_filename)
             #np.save(save_filename+".npy", np.array(depth_pc_velo))
@@ -398,7 +398,7 @@ def save_depth0(data_idx, pc_velo, calib, img_fov, img_width, img_height, \
         depth_pc = np.concatenate((pc_velo, depth_pc_velo),axis=0)
         print("depth_pc:",depth_pc.shape)
 
-    vely_dir = "data/obj/training/depth_pc"
+    vely_dir = "data/object/training/depth_pc"
     save_filename = os.path.join(vely_dir, '%06d.bin'%(data_idx))
 
     depth_pc=depth_pc.astype(np.float32)
@@ -416,7 +416,7 @@ def save_depth(data_idx, pc_velo, calib, img_fov, img_width, img_height, \
 
         print("depth_pc:",depth_pc.shape)
 
-    vely_dir = "data/obj/training/depth_pc"
+    vely_dir = "data/object/training/depth_pc"
     save_filename = os.path.join(vely_dir, '%06d.bin'%(data_idx))
 
     depth_pc=depth_pc.astype(np.float32)
@@ -701,7 +701,7 @@ if __name__=='__main__':
     from viz_util import draw_lidar_simple, draw_lidar, draw_gt_boxes3d
 
     parser = argparse.ArgumentParser(description='PyTorch Training RPN')
-    parser.add_argument('-d', '--dir', type=str, default="data/obj", metavar='N',
+    parser.add_argument('-d', '--dir', type=str, default="data/object", metavar='N',
                         help='input  (default: data/object)')
     parser.add_argument('-i', '--ind', type=int, default=0, metavar='N',
                         help='input  (default: data/object)')

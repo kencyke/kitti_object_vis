@@ -1,46 +1,14 @@
 # KITTI Object data transformation and visualization
 
+## Requirement
 
-
-## Dataset
-
-Download the data (calib, image\_2, label\_2, velodyne) from [Kitti Object Detection Dataset](http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d) and place it in your data folder at `kitti/object`
-
-
-The folder structure is as following:
-```
-kitti
-    object
-        testing
-            calib
-            image_2
-            label_2
-            velodyne
-        training
-            calib
-            image_2
-            label_2
-            velodyne
-```
-
-## Requrements
-
-1. mayavi
-2. vtk
+* python >= 3.7
+* poetry >= 1.0.0
 
 ```
-pip install mayavi vtk
-```
-
-## Visualization
-
-1. 3D boxes on LiDar point cloud in volumetric mode
-2. 2D and 3D boxes on Camera image
-3. 2D boxes on LiDar Birdview
-4. LiDar data on Camera image
-
-
-```python
+$ poetry config --local virtualenvs.in-project true
+$ poetry install
+$ poetry shell
 $ python kitti_object.py --help
 usage: kitti_object.py [-h] [-d N] [-i N] [-p] [-s] [-l N] [-e N] [-r N]
                        [--gen_depth] [--vis] [--depth] [--img_fov]
@@ -75,14 +43,38 @@ optional arguments:
                         show lidar
   --show_lidar_topview_with_boxes
                         show lidar topview
-
 ```
 
-```python
-$ python kitti_object.py
+## Dataset
+
+Download the data (calib, image\_2, label\_2, velodyne) from [Kitti Object Detection Dataset](http://www.cvlibs.net/datasets/kitti/eval_object.php?obj_benchmark=3d) and place it in your data folder at `kitti/object`
+
+
+The folder structure is as following:
 ```
+kitti
+    object
+        testing
+            calib
+            image_2
+            label_2
+            velodyne
+        training
+            calib
+            image_2
+            label_2
+            velodyne
+```
+
+## Visualization
+
+1. 3D boxes on LiDar point cloud in volumetric mode
+2. 2D and 3D boxes on Camera image
+3. 2D boxes on LiDar Birdview
+4. LiDar data on Camera image
+
 Specific your own folder,
-```python
+```
 $ python kitti_object.py -d /path/to/kitti/object
 ```
 
@@ -104,6 +96,16 @@ $ python kitti_object.py --show_lidar_with_depth --img_fov --const_box --vis --s
 Show LiDAR with label (5 vector)
 ```
 $ python kitti_object.py --show_lidar_with_depth --img_fov --const_box --vis --pc_label
+Traceback (most recent call last):
+  File "kitti_object.py", line 734, in <module>
+    dataset_viz(args.dir, args)
+  File "kitti_object.py", line 605, in dataset_viz
+    pc_velo = dataset.get_lidar(data_idx, dtype, n_vec)[:,0:n_vec]
+  File "kitti_object.py", line 74, in get_lidar
+    return utils.load_velo_scan(lidar_filename, dtype, n_vec)
+  File "/home/suzuki/workdir-ml/kitti_object_vis/kitti_util.py", line 389, in load_velo_scan
+    scan = scan.reshape((-1, n_vec))
+ValueError: cannot reshape array of size 461536 into shape (5)
 ```
 
 ## Demo
@@ -118,11 +120,15 @@ $ python kitti_object.py --show_lidar_with_depth --img_fov --const_box --vis --p
 
 Firstly, map KITTI official formated results into data directory
 ```
-./map_pred.sh /path/to/results
+$ ./map_pred.sh /path/to/results
 ```
 
-```python
-python kitti_object.py -p
+```
+$ python kitti_object.py -p
+Traceback (most recent call last):
+  File "kitti_object.py", line 731, in <module>
+    assert os.path.exists(args.dir+"/training/pred")
+AssertionError
 ```
 <img src="./imgs/pred.png" alt="Show Predicted Results" align="center" />
 
